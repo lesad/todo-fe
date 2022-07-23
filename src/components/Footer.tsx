@@ -1,9 +1,9 @@
 const Footer = () => {
   const completedCount = 2;
   return (
-    <footer>
+    <footer className="flex flex-row justify-evenly">
       <span>Completed: {completedCount}</span>
-      <button>Clear</button>
+      <button className="rounded-full bg-red-200 px-2">Clear completed</button>
     </footer>
   );
 };

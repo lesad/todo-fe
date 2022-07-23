@@ -5,7 +5,7 @@ import TodoList from './components/TodoList';
 
 const App = () => {
   return (
-    <div className="w-96 my-0 mx-auto">
+    <div className="w-96 mt-5 mx-auto">
       <header>
         <h1 className='text-2xl text-center'>TODOS</h1>
         <AddTodo />

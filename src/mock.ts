@@ -21,5 +21,12 @@ export default function useGetTodos(): ITodo[] {
       createdDate: 1501594393387,
       completedDate: 1643205131975,
     },
+    {
+      id: 'V1StGXR8_Z5jdHi6B-myr',
+      text: 'Very long long long long long long long long long long',
+      completed: true,
+      createdDate: 1501594393387,
+      completedDate: 1643205131975,
+    },
   ];
 }
