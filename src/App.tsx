@@ -1,20 +1,13 @@
-import AddTodo from './components/AddTodo';
-import FilterOptions from './components/FilterOptions';
-import Footer from './components/Footer';
+import Header from './components/Header';
 import TodoList from './components/TodoList';
+import Footer from './components/Footer';
 
-const App = () => {
-  return (
-    <div className="w-96 mt-5 mx-auto">
-      <header>
-        <h1 className='text-2xl text-center'>TODOS</h1>
-        <AddTodo />
-      </header>
-      <FilterOptions />
-      <TodoList />
-      <Footer />
-    </div>
-  );
-};
+const App = () => (
+  <div className="w-96 mt-5 mx-auto">
+    <Header />
+    <TodoList />
+    <Footer />
+  </div>
+);
 
 export default App;
