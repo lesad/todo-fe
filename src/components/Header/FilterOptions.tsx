@@ -5,7 +5,7 @@ import { useCompleteTodoMutation, useGetTodosQuery } from '../../redux/apiSlice'
 import FilterButton from './FilterButton';
 
 const FilterOptions = () => {
-  const { data: todos, isSuccess, refetch } = useGetTodosQuery();
+  const { data: todos, isSuccess } = useGetTodosQuery();
   const [completeTodo] = useCompleteTodoMutation();
 
   const completeAllTodos = () => {
@@ -13,7 +13,6 @@ const FilterOptions = () => {
       todos.forEach((todo) => {
         if (!todo.completed) completeTodo(todo.id);
       });
-    refetch();
   };
 
   return (
