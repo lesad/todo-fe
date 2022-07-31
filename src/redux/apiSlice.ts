@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import ITodo from '../models/todo.model';
 
-export const apiSlice = createApi({
-  reducerPath: 'api',
+const api = createApi({
   tagTypes: ['Todos'],
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080' }),
   endpoints: (builder) => ({
@@ -62,4 +61,6 @@ export const {
   useDeleteTodoMutation,
   useCompleteTodoMutation,
   useIncompleteTodoMutation,
-} = apiSlice;
+} = api;
+
+export default api;
