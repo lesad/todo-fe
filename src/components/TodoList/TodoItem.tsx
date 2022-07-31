@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faRemove } from '@fortawesome/free-solid-svg-icons';
-import { useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import {
   useCompleteTodoMutation,
@@ -16,45 +16,56 @@ interface ITodoItemProps {
 }
 
 const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
-  const [textState, setTextState] = useState<string>(text);
-  const [isCompleted, toggleCompleted] = useReducer(
-    (state) => !state,
-    completed
-  );
+  const [content, setContent] = useState<string>(text);
+  const [editable, toggleEdit] = useReducer((state) => !state, false);
 
   const [completeTodo] = useCompleteTodoMutation();
   const [incompleteTodo] = useIncompleteTodoMutation();
   const [updateTodo] = useUpdateTodoMutation();
   const [deleteTodo] = useDeleteTodoMutation();
 
-  const onCheckClick = () => {
-    if (isCompleted) incompleteTodo(id);
+  const handleCheckboxChange = () => {
+    if (completed) incompleteTodo(id);
     else completeTodo(id);
-    toggleCompleted();
   };
 
-  const onRenameClick = () => {
-    updateTodo({id, text: textState});
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setContent(e.target.value);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const trimmedText = e.target.value.trim();
+    if (e.key === 'Enter' && trimmedText) {
+      updateTodo({ id, text: trimmedText });
+      toggleEdit();
+    }
   };
 
-  const onDeleteClick = () => {
-    console.log(`Deleting todo ${text} with id ${id}`);
-    // deleteTodo(id);
-  };
+  const handleRenameClick = () => updateTodo({ id, text: content });
 
   return (
     <li className="flex flex-row py-2">
       <input
         className="mr-2"
         type="checkbox"
-        checked={isCompleted}
-        onChange={onCheckClick}
+        checked={completed}
+        onChange={handleCheckboxChange}
       />
-      <label className="truncate">{text}</label>
-      <button className="px-1 ml-auto" onClick={onRenameClick}>
+      {editable ? (
+        <span className="truncate" onDoubleClick={toggleEdit}>
+          {content}
+        </span>
+      ) : (
+        <input
+          type="text"
+          value={content}
+          onKeyDown={handleKeyDown}
+          onChange={handleInputChange}
+        />
+      )}
+      <button className="px-1 ml-auto" onClick={handleRenameClick}>
         <FontAwesomeIcon icon={faPen} />
       </button>
-      <button className="px-1" onClick={onDeleteClick}>
+      <button className="px-1" onClick={() => deleteTodo(id)}>
         <FontAwesomeIcon icon={faRemove} />
       </button>
     </li>
