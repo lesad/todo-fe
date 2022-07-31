@@ -8,13 +8,7 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getTodos: builder.query<ITodo[], void>({
       query: () => '/tasks',
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Todos' as const, id })),
-              { type: 'Todos', id: 'LIST' },
-            ]
-          : [{ type: 'Todos', id: 'LIST' }],
+      providesTags: ['Todos'],
     }),
     addTodo: builder.mutation<ITodo, string>({
       query: (text) => ({
@@ -22,40 +16,40 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { text },
       }),
-      invalidatesTags: [{ type: 'Todos', id: 'LIST' }],
+      invalidatesTags: ['Todos'],
     }),
     getCompletedTodos: builder.query<ITodo[], void>({
       query: () => '/tasks/completed',
       providesTags: ['Todos'],
     }),
-    updateTodo: builder.mutation<ITodo[], { id: string; text: string }>({
+    updateTodo: builder.mutation<ITodo[], Partial<ITodo>>({
       query: ({ id, text }) => ({
         url: `/tasks/${id}`,
         method: 'POST',
         body: { text },
       }),
-      invalidatesTags: (_, __, todo) => [{ type: 'Todos', id: todo.id }],
+      invalidatesTags: ['Todos'],
     }),
     deleteTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_, __, id) => [{ type: 'Todos', id }],
+      invalidatesTags: ['Todos'],
     }),
     completeTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/complete`,
         method: 'POST',
       }),
-      invalidatesTags: (_, __, id) => [{ type: 'Todos', id }],
+      invalidatesTags: ['Todos'],
     }),
     incompleteTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/incomplete`,
         method: 'POST',
       }),
-      invalidatesTags: (_, __, id) => [{ type: 'Todos', id }],
+      invalidatesTags: ['Todos'],
     }),
   }),
 });
