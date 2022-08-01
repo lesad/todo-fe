@@ -3,11 +3,11 @@ import TodoList from './components/TodoList';
 import Footer from './components/Footer';
 
 const App = () => (
-  <div className="w-96 mt-5 mx-auto">
+  <main className="w-96 mt-5 mx-auto">
     <Header />
     <TodoList />
     <Footer />
-  </div>
+  </main>
 );
 
 export default App;

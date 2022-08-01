@@ -9,14 +9,14 @@ import {
   useUpdateTodoMutation,
 } from '../../redux/apiSlice';
 
-interface ITodoItemProps {
+interface TodoItemProps {
   id: string;
-  text: string;
-  completed: boolean;
+  value: string;
+  isCompleted: boolean;
 }
 
-const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
-  const [content, setContent] = useState<string>(text);
+const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
+  const [text, setText] = useState<string>(value);
   const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
   const [completeTodo] = useCompleteTodoMutation();
@@ -25,12 +25,12 @@ const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
   const [deleteTodo] = useDeleteTodoMutation();
 
   const handleCheckboxChange = () => {
-    if (completed) incompleteTodo(id);
+    if (isCompleted) incompleteTodo(id);
     else completeTodo(id);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setContent(e.target.value);
+    setText(e.target.value);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const trimmedText = e.target.value.trim();
@@ -41,7 +41,8 @@ const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
   };
 
   const handleRenameClick = () => {
-    if (content !== text) updateTodo({ id, text: content });
+    if (text !== value) updateTodo({ id, text: text });
+    toggleEdit();
   };
 
   return (
@@ -49,20 +50,20 @@ const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
       <input
         className="mr-2"
         type="checkbox"
-        checked={completed}
+        checked={isCompleted}
         onChange={handleCheckboxChange}
       />
       {isEditable ? (
         <input
           type="text"
-          value={content}
+          value={text}
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
           onBlur={toggleEdit}
         />
       ) : (
         <span className="truncate" onDoubleClick={toggleEdit}>
-          {content}
+          {text}
         </span>
       )}
       <button className="px-1 ml-auto" onClick={handleRenameClick}>

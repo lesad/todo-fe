@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Filter, filterOn, selectFilter } from '../../redux/filterSlice';
 
-interface IFilterButtonProps {
+interface FilterButtonProps {
   title: Filter;
 }
 
-const FilterButton = ({ title }: IFilterButtonProps) => {
+const FilterButton = ({ title }: FilterButtonProps) => {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 

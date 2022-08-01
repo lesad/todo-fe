@@ -1,4 +1,4 @@
-interface ITodo {
+interface Todo {
   id: string;
   text: string;
   completed: boolean;
@@ -6,4 +6,4 @@ interface ITodo {
   completedDate?: number;
 }
 
-export default ITodo;
+export default Todo;

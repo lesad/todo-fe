@@ -1,20 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import ITodo from '../models/todo.model';
+
+import Todo from '../types/todo';
 import { RootState } from './store';
 
 const api = createApi({
   tagTypes: ['Todos'],
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080' }),
   endpoints: (builder) => ({
-    getTodos: builder.query<ITodo[], void>({
+    getTodos: builder.query<Todo[], void>({
       query: () => '/tasks',
-      transformResponse: (res: ITodo[]) =>
+      transformResponse: (res: Todo[]) =>
         // Newest comes last
         res.sort((a, b) => a.createdDate - b.createdDate),
       providesTags: ['Todos'],
     }),
 
-    addTodo: builder.mutation<ITodo, string>({
+    addTodo: builder.mutation<Todo, string>({
       query: (text) => ({
         url: '/tasks',
         method: 'POST',
@@ -23,7 +24,7 @@ const api = createApi({
       async onQueryStarted(text, { dispatch, queryFulfilled }) {
         const postResult = dispatch(
           api.util.updateQueryData('getTodos', undefined, (draft) => {
-            const newTodo: ITodo = {
+            const newTodo: Todo = {
               id: '',
               text,
               completed: false,
@@ -41,12 +42,12 @@ const api = createApi({
       invalidatesTags: ['Todos'],
     }),
 
-    getCompletedTodos: builder.query<ITodo[], void>({
+    getCompletedTodos: builder.query<Todo[], void>({
       query: () => '/tasks/completed',
       providesTags: ['Todos'],
     }),
 
-    updateTodo: builder.mutation<ITodo[], { id: string; text: string }>({
+    updateTodo: builder.mutation<Todo[], { id: string; text: string }>({
       query: ({ id, text }) => ({
         url: `/tasks/${id}`,
         method: 'POST',
@@ -68,7 +69,7 @@ const api = createApi({
       invalidatesTags: ['Todos'],
     }),
 
-    deleteTodo: builder.mutation<ITodo[], string>({
+    deleteTodo: builder.mutation<Todo[], string>({
       query: (id) => ({
         url: `/tasks/${id}`,
         method: 'DELETE',
@@ -89,7 +90,7 @@ const api = createApi({
       invalidatesTags: ['Todos'],
     }),
 
-    completeTodo: builder.mutation<ITodo[], string>({
+    completeTodo: builder.mutation<Todo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/complete`,
         method: 'POST',
@@ -110,7 +111,7 @@ const api = createApi({
       invalidatesTags: ['Todos'],
     }),
 
-    incompleteTodo: builder.mutation<ITodo[], string>({
+    incompleteTodo: builder.mutation<Todo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/incomplete`,
         method: 'POST',

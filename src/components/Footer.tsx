@@ -28,15 +28,15 @@ const Footer = () => {
   const completedCount = useGetCompletedCount();
   const handleClick = useDeleteCompletedTodos();
 
-  return (
-    completedCount != 0 && (
-      <footer className="flex flex-row justify-evenly">
-        <span>Completed: {completedCount}</span>
-        <button className="rounded-full bg-red-200 px-2" onClick={handleClick}>
-          Clear completed
-        </button>
-      </footer>
-    )
+  return completedCount ? (
+    <footer className="flex flex-row justify-evenly">
+      <span>Completed: {completedCount}</span>
+      <button className="rounded-full bg-red-200 px-2" onClick={handleClick}>
+        Clear completed
+      </button>
+    </footer>
+  ) : (
+    <> </>
   );
 };
 
