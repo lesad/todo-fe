@@ -59,6 +59,12 @@ export const selectCompletedIds = (state: RootState) =>
     .select()(state)
     .data?.map((todo) => todo.id);
 
+export const selectIncompleteIds = (state: RootState) =>
+  api.endpoints.getTodos
+    .select()(state)
+    .data?.filter((todo) => !todo.completed)
+    .map((todo) => todo.id);
+
 export const {
   useGetTodosQuery,
   useAddTodoMutation,

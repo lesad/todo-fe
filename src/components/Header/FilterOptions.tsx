@@ -1,19 +1,30 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesDown } from '@fortawesome/free-solid-svg-icons';
 
-import { useCompleteTodoMutation, useGetTodosQuery } from '../../redux/apiSlice';
+import {
+  selectIncompleteIds,
+  useCompleteTodoMutation,
+} from '../../redux/apiSlice';
+
 import FilterButton from './FilterButton';
+import { useSelector } from 'react-redux';
+
+const useCompleteAllTodos = () => {
+  const [completeTodo] = useCompleteTodoMutation();
+  const toComplete = useSelector(selectIncompleteIds);
+
+  return async () => {
+    if (!toComplete) return;
+
+    // TODO error handling
+    for (const id of toComplete) {
+      await completeTodo(id);
+    }
+  };
+};
 
 const FilterOptions = () => {
-  const { data: todos, isSuccess } = useGetTodosQuery();
-  const [completeTodo] = useCompleteTodoMutation();
-
-  const completeAllTodos = () => {
-    if (isSuccess)
-      todos.forEach((todo) => {
-        if (!todo.completed) completeTodo(todo.id);
-      });
-  };
+  const completeAllTodos = useCompleteAllTodos();
 
   return (
     <section className="flex flex-row justify-between mr-5 my-3">
