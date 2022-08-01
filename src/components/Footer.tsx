@@ -1,21 +1,42 @@
-import { useGetCompletedTodosQuery } from '../redux/apiSlice';
+import { useSelector } from 'react-redux';
+
+import {
+  selectCompletedIds,
+  useDeleteTodoMutation,
+  useGetCompletedTodosQuery,
+} from '../redux/apiSlice';
+
+const useGetCompletedCount = () => {
+  const { data: completedTodos } = useGetCompletedTodosQuery();
+  return completedTodos?.length || 0;
+};
+
+const useDeleteCompletedTodos = () => {
+  const [deleteTodo] = useDeleteTodoMutation();
+  const toDelete = useSelector(selectCompletedIds);
+  if (!toDelete) return;
+
+  // TODO: error handling
+  return async () => {
+    for (const id of toDelete) {
+      await deleteTodo(id);
+    }
+  };
+};
 
 const Footer = () => {
-  const {
-    data: completedTodos,
-    isSuccess,
-    isError,
-  } = useGetCompletedTodosQuery();
-
-  if (isError || !isSuccess) return <p>No data</p>;
-
-  const completedCount = completedTodos.length;
+  const completedCount = useGetCompletedCount();
+  const handleClick = useDeleteCompletedTodos();
 
   return (
-    <footer className="flex flex-row justify-evenly">
-      <span>Completed: {completedCount}</span>
-      <button className="rounded-full bg-red-200 px-2">Clear completed</button>
-    </footer>
+    completedCount != 0 && (
+      <footer className="flex flex-row justify-evenly">
+        <span>Completed: {completedCount}</span>
+        <button className="rounded-full bg-red-200 px-2" onClick={handleClick}>
+          Clear completed
+        </button>
+      </footer>
+    )
   );
 };
 

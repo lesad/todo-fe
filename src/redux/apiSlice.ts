@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import ITodo from '../models/todo.model';
+import { RootState } from './store';
 
 const api = createApi({
   tagTypes: ['Todos'],
@@ -52,6 +53,11 @@ const api = createApi({
     }),
   }),
 });
+
+export const selectCompletedIds = (state: RootState) =>
+  api.endpoints.getCompletedTodos
+    .select()(state)
+    .data?.map((todo) => todo.id);
 
 export const {
   useGetTodosQuery,
