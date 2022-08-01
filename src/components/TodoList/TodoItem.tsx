@@ -17,7 +17,7 @@ interface ITodoItemProps {
 
 const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
   const [content, setContent] = useState<string>(text);
-  const [editable, toggleEdit] = useReducer((state) => !state, false);
+  const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
   const [completeTodo] = useCompleteTodoMutation();
   const [incompleteTodo] = useIncompleteTodoMutation();
@@ -40,7 +40,9 @@ const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
     }
   };
 
-  const handleRenameClick = () => updateTodo({ id, text: content });
+  const handleRenameClick = () => {
+    if (content !== text) updateTodo({ id, text: content });
+  };
 
   return (
     <li className="flex flex-row py-2">
@@ -50,17 +52,18 @@ const TodoItem = ({ id, text, completed }: ITodoItemProps) => {
         checked={completed}
         onChange={handleCheckboxChange}
       />
-      {editable ? (
-        <span className="truncate" onDoubleClick={toggleEdit}>
-          {content}
-        </span>
-      ) : (
+      {isEditable ? (
         <input
           type="text"
           value={content}
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
+          onBlur={toggleEdit}
         />
+      ) : (
+        <span className="truncate" onDoubleClick={toggleEdit}>
+          {content}
+        </span>
       )}
       <button className="px-1 ml-auto" onClick={handleRenameClick}>
         <FontAwesomeIcon icon={faPen} />

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
-type Filter = 'All' | 'Active' | 'Completed';
+export type Filter = 'All' | 'Active' | 'Completed';
 
-export interface FilterState {
+interface FilterState {
   value: Filter;
 }
 
@@ -20,5 +21,6 @@ export const filterSlice = createSlice({
   },
 });
 
-export const { filterOn } = filterSlice.actions
-export default filterSlice.reducer
+export const selectFilter = (state: RootState) => state.filter.value;
+export const { filterOn } = filterSlice.actions;
+export default filterSlice.reducer;
