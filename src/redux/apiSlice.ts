@@ -8,47 +8,126 @@ const api = createApi({
   endpoints: (builder) => ({
     getTodos: builder.query<ITodo[], void>({
       query: () => '/tasks',
+      transformResponse: (res: ITodo[]) =>
+        // Newest comes last
+        res.sort((a, b) => a.createdDate - b.createdDate),
       providesTags: ['Todos'],
     }),
+
     addTodo: builder.mutation<ITodo, string>({
       query: (text) => ({
         url: '/tasks',
         method: 'POST',
         body: { text },
       }),
+      async onQueryStarted(text, { dispatch, queryFulfilled }) {
+        const postResult = dispatch(
+          api.util.updateQueryData('getTodos', undefined, (draft) => {
+            const newTodo: ITodo = {
+              id: '',
+              text,
+              completed: false,
+              createdDate: 0,
+            };
+            draft.push(newTodo);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          postResult.undo();
+        }
+      },
       invalidatesTags: ['Todos'],
     }),
+
     getCompletedTodos: builder.query<ITodo[], void>({
       query: () => '/tasks/completed',
       providesTags: ['Todos'],
     }),
-    updateTodo: builder.mutation<ITodo[], Partial<ITodo>>({
+
+    updateTodo: builder.mutation<ITodo[], { id: string; text: string }>({
       query: ({ id, text }) => ({
         url: `/tasks/${id}`,
         method: 'POST',
         body: { text },
       }),
+      async onQueryStarted({ id, text }, { dispatch, queryFulfilled }) {
+        const postResult = dispatch(
+          api.util.updateQueryData('getTodos', undefined, (draft) => {
+            const foundTodo = draft.find((todo) => todo.id === id);
+            if (foundTodo) foundTodo.text = text;
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          postResult.undo();
+        }
+      },
       invalidatesTags: ['Todos'],
     }),
+
     deleteTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const postResult = dispatch(
+          api.util.updateQueryData('getTodos', undefined, (draft) => {
+            const foundIndex = draft.findIndex((todo) => todo.id === id);
+            if (foundIndex != -1) draft.splice(foundIndex, 1);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          postResult.undo();
+        }
+      },
       invalidatesTags: ['Todos'],
     }),
+
     completeTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/complete`,
         method: 'POST',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const postResult = dispatch(
+          api.util.updateQueryData('getTodos', undefined, (draft) => {
+            const foundTodo = draft.find((todo) => todo.id === id);
+            if (foundTodo) foundTodo.completed = true;
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          postResult.undo();
+        }
+      },
       invalidatesTags: ['Todos'],
     }),
+
     incompleteTodo: builder.mutation<ITodo[], string>({
       query: (id) => ({
         url: `/tasks/${id}/incomplete`,
         method: 'POST',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const postResult = dispatch(
+          api.util.updateQueryData('getTodos', undefined, (draft) => {
+            const foundTodo = draft.find((todo) => todo.id === id);
+            if (foundTodo) foundTodo.completed = false;
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          postResult.undo();
+        }
+      },
       invalidatesTags: ['Todos'],
     }),
   }),
