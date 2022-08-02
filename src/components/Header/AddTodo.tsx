@@ -28,9 +28,8 @@ const AddTodo = () => {
   };
 
   return (
-    <form className="flex flex-row my-3">
+    <form className="flex flex-row my-3 border-b-2 border-b-black">
       <input
-        id="new-todo"
         className="grow focus:outline-none"
         placeholder="Enter new todo"
         autoFocus

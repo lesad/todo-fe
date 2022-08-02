@@ -25,7 +25,7 @@ const TodoList = () => {
   if (!isSuccess || isError) return <span>Error!</span>;
 
   return (
-    <ul>
+    <ul className="border-t-2 border-black">
       {filterTodos(todos, filter).map((todo) => (
         <TodoItem
           key={todo.id}

@@ -16,7 +16,6 @@ const useCompleteAllTodos = () => {
   return async () => {
     if (!toComplete) return;
 
-    // TODO error handling
     for (const id of toComplete) {
       await completeTodo(id);
     }
@@ -27,7 +26,7 @@ const FilterOptions = () => {
   const completeAllTodos = useCompleteAllTodos();
 
   return (
-    <section className="flex flex-row justify-between mr-5 my-3">
+    <section className="flex flex-row justify-between mx-2 my-3">
       <button className="hover:scale-125" onClick={completeAllTodos}>
         <FontAwesomeIcon icon={faAnglesDown} />
       </button>

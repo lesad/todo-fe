@@ -46,7 +46,7 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
   };
 
   return (
-    <li className="flex flex-row py-2">
+    <li className="flex flex-row py-2 hover:bg-gray-100 px-2 group">
       <input
         className="mr-2"
         type="checkbox"
@@ -66,10 +66,10 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
           {text}
         </span>
       )}
-      <button className="px-1 ml-auto" onClick={handleRenameClick}>
+      <button className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
         <FontAwesomeIcon icon={faPen} />
       </button>
-      <button className="px-1" onClick={() => deleteTodo(id)}>
+      <button className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
         <FontAwesomeIcon icon={faRemove} />
       </button>
     </li>

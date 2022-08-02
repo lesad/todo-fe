@@ -16,7 +16,6 @@ const useDeleteCompletedTodos = () => {
   const toDelete = useSelector(selectCompletedIds);
   if (!toDelete) return;
 
-  // TODO: error handling
   return async () => {
     for (const id of toDelete) {
       await deleteTodo(id);
@@ -29,9 +28,12 @@ const Footer = () => {
   const handleClick = useDeleteCompletedTodos();
 
   return completedCount ? (
-    <footer className="flex flex-row justify-evenly">
+    <footer className="flex flex-row justify-evenly border-t-2 border-black pt-2">
       <span>Completed: {completedCount}</span>
-      <button className="rounded-full bg-red-200 px-2" onClick={handleClick}>
+      <button
+        className="border-2 border-black rounded-full hover:bg-red-200 px-2"
+        onClick={handleClick}
+      >
         Clear completed
       </button>
     </footer>

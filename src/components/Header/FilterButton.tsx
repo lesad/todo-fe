@@ -12,7 +12,7 @@ const FilterButton = ({ title }: FilterButtonProps) => {
   return (
     <button
       className={`border-black border-2 rounded-full px-2 hover:bg-blue-200 ${
-        filter === title ? 'bg-blue-200' : ''
+        filter === title ? 'bg-blue-100' : ''
       }`}
       onClick={() => dispatch(filterOn(title))}
     >
