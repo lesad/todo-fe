@@ -1,14 +1,12 @@
-import type { FC } from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 
 import { useGetTodosQuery } from "../../redux/apiSlice";
 import { Filter, selectFilter } from "../../redux/filterSlice";
-import type Todo from "../../types/todo";
-import { Spinner } from "../Spinner";
-import { TodoItem } from "./TodoItem";
+import Todo from "../../types/todo";
+import Spinner from "../Spinner";
+import TodoItem from "./TodoItem";
 
-export const filterTodos = (todos: Todo[], filter: Filter) => {
+const filterTodos = (todos: Todo[], filter: Filter) => {
     switch (filter) {
         case "Active":
             return todos.filter((todo) => !todo.completed);
@@ -19,7 +17,7 @@ export const filterTodos = (todos: Todo[], filter: Filter) => {
     }
 };
 
-export const TodoList: FC = () => {
+const TodoList = () => {
     const { data: todos, isLoading, isSuccess, isError } = useGetTodosQuery();
     const filter = useSelector(selectFilter);
 
@@ -27,11 +25,11 @@ export const TodoList: FC = () => {
     if (!isSuccess || isError) return <span>Error!</span>;
 
     return (
-        <StyledUl>
+        <ul className="border-t-2 border-black">
             {filterTodos(todos, filter).map((todo) => (
                 <TodoItem key={todo.id} id={todo.id} value={todo.text} isCompleted={todo.completed} />
             ))}
-        </StyledUl>
+        </ul>
     );
 };
 

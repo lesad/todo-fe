@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import type Todo from "../types/todo";
-import type { RootState } from "./store";
+import Todo from "../types/todo";
+import { RootState } from "./store";
 
 const api = createApi({
     tagTypes: ["Todos"],
@@ -78,7 +78,7 @@ const api = createApi({
                 const postResult = dispatch(
                     api.util.updateQueryData("getTodos", undefined, (draft) => {
                         const foundIndex = draft.findIndex((todo) => todo.id === id);
-                        if (foundIndex !== -1) draft.splice(foundIndex, 1);
+                        if (foundIndex != -1) draft.splice(foundIndex, 1);
                     }),
                 );
                 try {

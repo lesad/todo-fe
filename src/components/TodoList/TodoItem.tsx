@@ -1,9 +1,8 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
-import { FC, useReducer, useState } from "react";
-import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useReducer, useState } from "react";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
-import { Button } from "../Button";
 
 interface TodoItemProps {
     id: string;
@@ -11,7 +10,7 @@ interface TodoItemProps {
     isCompleted: boolean;
 }
 
-export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
+const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
     const [text, setText] = useState<string>(value);
     const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
@@ -28,7 +27,7 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const trimmedText = e.currentTarget.value.trim();
+        const trimmedText = e.target.value.trim();
         if (e.key === "Enter" && trimmedText) {
             updateTodo({ id, text: trimmedText });
             toggleEdit();
@@ -41,24 +40,22 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
     };
 
     return (
-        <StyledListItem>
-            <StyledCheckbox type="checkbox" checked={isCompleted} onChange={handleCheckboxChange} />
+        <li className="flex flex-row py-2 hover:bg-gray-100 px-2 group">
+            <input className="mr-2" type="checkbox" checked={isCompleted} onChange={handleCheckboxChange} />
             {isEditable ? (
-                <StyledInput
-                    type="text"
-                    value={text}
-                    onKeyDown={handleKeyDown}
-                    onChange={handleInputChange}
-                    onBlur={toggleEdit}
-                    // TODO: unify events
-                    onMouseLeave={toggleEdit}
-                />
+                <input type="text" value={text} onKeyDown={handleKeyDown} onChange={handleInputChange} onBlur={toggleEdit} />
             ) : (
-                <StyledSpan onDoubleClick={toggleEdit}>{text}</StyledSpan>
+                <span className="truncate" onDoubleClick={toggleEdit}>
+                    {text}
+                </span>
             )}
-            <StyledButton onClick={handleRenameClick} icon={faPen} />
-            <StyledButton onClick={() => deleteTodo(id)} icon={faRemove} />
-        </StyledListItem>
+            <button className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
+                <FontAwesomeIcon icon={faPen} />
+            </button>
+            <button className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
+                <FontAwesomeIcon icon={faRemove} />
+            </button>
+        </li>
     );
 };
 

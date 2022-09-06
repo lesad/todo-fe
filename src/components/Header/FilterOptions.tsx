@@ -1,12 +1,9 @@
 import { faAnglesDown } from "@fortawesome/free-solid-svg-icons";
-import type { FC } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 
 import { selectIncompleteIds, useCompleteTodoMutation } from "../../redux/apiSlice";
-import { Filter } from "../../redux/filterSlice";
-import { Button } from "../Button";
-import { FilterButton } from "./FilterButton";
+import FilterButton from "./FilterButton";
 
 const useCompleteAllTodos = () => {
     const [completeTodo] = useCompleteTodoMutation();
@@ -14,21 +11,25 @@ const useCompleteAllTodos = () => {
 
     return async () => {
         if (!toComplete) return;
-        const promises = toComplete.map((id) => completeTodo(id));
-        await Promise.all(promises);
+
+        for (const id of toComplete) {
+            await completeTodo(id);
+        }
     };
 };
 
-export const FilterOptions: FC = () => {
+const FilterOptions = () => {
     const completeAllTodos = useCompleteAllTodos();
 
     return (
-        <StyledSection>
-            <StyledButton onClick={completeAllTodos} icon={faAnglesDown} />
-            <FilterButton title={Filter.All} />
-            <FilterButton title={Filter.Active} />
-            <FilterButton title={Filter.Completed} />
-        </StyledSection>
+        <section className="flex flex-row justify-between mx-2 my-3">
+            <button className="hover:scale-125" onClick={completeAllTodos}>
+                <FontAwesomeIcon icon={faAnglesDown} />
+            </button>
+            <FilterButton title="All" />
+            <FilterButton title="Active" />
+            <FilterButton title="Completed" />
+        </section>
     );
 };
 
