@@ -1,15 +1,13 @@
-import styled from "styled-components";
-
-import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
-import { TodoList } from "./components/TodoList";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import TodoList from "./components/TodoList";
 
 const App = () => (
-    <StyledMain>
+    <main className="w-96 mt-5 mx-auto">
         <Header />
         <TodoList />
         <Footer />
-    </StyledMain>
+    </main>
 );
 
 const StyledMain = styled.main`
