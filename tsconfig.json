@@ -1,24 +1,25 @@
 {
-    "include": ["./src", "./src/.storybook/**/*", "./src/.jest/**/*"],
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "noEmit": true,
-        "jsx": "preserve",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "skipLibCheck": true,
-        "strict": true,
-        "isolatedModules": true,
-        "importsNotUsedAsValues": "error",
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "esModuleInterop": false,
-        "plugins": [
-            {
-                "name": "typescript-styled-plugin"
-            }
-        ]
-    },
-    "references": [{ "path": "./tsconfig.node.json" }]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "jsx": "preserve",
+    "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "importsNotUsedAsValues": "error",
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
