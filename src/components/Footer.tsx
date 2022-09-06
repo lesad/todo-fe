@@ -1,6 +1,4 @@
-import type { FC } from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 
 import { selectCompletedIds, useDeleteTodoMutation, useGetCompletedTodosQuery } from "../redux/apiSlice";
 
@@ -12,26 +10,29 @@ const useGetCompletedCount = () => {
 const useDeleteCompletedTodos = () => {
     const [deleteTodo] = useDeleteTodoMutation();
     const toDelete = useSelector(selectCompletedIds);
+    if (!toDelete) return;
 
     return async () => {
-        if (!toDelete) return;
-        const promises = toDelete.map((id) => deleteTodo(id));
-        await Promise.all(promises);
+        for (const id of toDelete) {
+            await deleteTodo(id);
+        }
     };
 };
 
-export const Footer: FC = () => {
+const Footer = () => {
     const completedCount = useGetCompletedCount();
     const handleClick = useDeleteCompletedTodos();
 
     return completedCount ? (
-        <StyledFooter>
+        <footer className="flex flex-row justify-evenly border-t-2 border-black pt-2">
             <span>Completed: {completedCount}</span>
-            <StyledButton type="button" onClick={handleClick}>
+            <button className="border-2 border-black rounded-full hover:bg-red-200 px-2" onClick={handleClick}>
                 Clear completed
-            </StyledButton>
-        </StyledFooter>
-    ) : null;
+            </button>
+        </footer>
+    ) : (
+        <> </>
+    );
 };
 
 const StyledFooter = styled.footer`

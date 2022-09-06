@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { RootState } from "./store";
+import { RootState } from "./store";
 
-export enum Filter {
-    All = "All",
-    Active = "Active",
-    Completed = "Completed",
+export type Filter = "All" | "Active" | "Completed";
+
+interface FilterState {
+    value: Filter;
 }
 
-const initialState: { value: Filter } = {
-    value: Filter.All,
+const initialState: FilterState = {
+    value: "All",
 };
 
 export const filterSlice = createSlice({
@@ -17,9 +17,7 @@ export const filterSlice = createSlice({
     initialState,
     reducers: {
         filterOn: (state, action: PayloadAction<Filter>) => {
-            // eslint-disable-next-line no-param-reassign
             state.value = action.payload;
-            // RTK uses immer internally
         },
     },
 });
