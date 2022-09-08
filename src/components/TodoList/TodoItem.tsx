@@ -10,7 +10,7 @@ interface TodoItemProps {
     isCompleted: boolean;
 }
 
-const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
+export const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
     const [text, setText] = useState<string>(value);
     const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
@@ -27,7 +27,7 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const trimmedText = e.target.value.trim();
+        const trimmedText = e.currentTarget.value.trim();
         if (e.key === "Enter" && trimmedText) {
             updateTodo({ id, text: trimmedText });
             toggleEdit();
@@ -49,14 +49,12 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
                     {text}
                 </span>
             )}
-            <button className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
+            <button type="button" className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
                 <FontAwesomeIcon icon={faPen} />
             </button>
-            <button className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
+            <button type="button" className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
                 <FontAwesomeIcon icon={faRemove} />
             </button>
         </li>
     );
 };
-
-export default TodoItem;

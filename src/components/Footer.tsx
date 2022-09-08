@@ -10,23 +10,22 @@ const useGetCompletedCount = () => {
 const useDeleteCompletedTodos = () => {
     const [deleteTodo] = useDeleteTodoMutation();
     const toDelete = useSelector(selectCompletedIds);
-    if (!toDelete) return;
 
     return async () => {
-        for (const id of toDelete) {
-            await deleteTodo(id);
-        }
+        if (!toDelete) return;
+        const promises = toDelete.map((id) => deleteTodo(id));
+        await Promise.all(promises);
     };
 };
 
-const Footer = () => {
+export const Footer = () => {
     const completedCount = useGetCompletedCount();
     const handleClick = useDeleteCompletedTodos();
 
     return completedCount ? (
         <footer className="flex flex-row justify-evenly border-t-2 border-black pt-2">
             <span>Completed: {completedCount}</span>
-            <button className="border-2 border-black rounded-full hover:bg-red-200 px-2" onClick={handleClick}>
+            <button type="button" className="border-2 border-black rounded-full hover:bg-red-200 px-2" onClick={handleClick}>
                 Clear completed
             </button>
         </footer>
@@ -34,5 +33,3 @@ const Footer = () => {
         <> </>
     );
 };
-
-export default Footer;
