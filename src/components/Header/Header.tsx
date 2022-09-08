@@ -1,15 +1,10 @@
-import AddTodo from "./AddTodo";
-import FilterOptions from "./FilterOptions";
+import { AddTodo } from "./AddTodo";
+import { FilterOptions } from "./FilterOptions";
 
-const Header = () => (
+export const Header = () => (
     <header>
         <h1 className="text-3xl text-center font-bold">TODOS</h1>
         <AddTodo />
         <FilterOptions />
     </header>
 );
-
-const StyledTitle = styled.h1`
-    font-size: 3rem;
-    text-align: center;
-`;
