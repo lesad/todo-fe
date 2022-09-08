@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "PORT=3000 vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint ./src --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
