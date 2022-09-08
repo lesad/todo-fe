@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 
 import { selectIncompleteIds, useCompleteTodoMutation } from "../../redux/apiSlice";
+import { Filter } from "../../redux/filterSlice";
 import { FilterButton } from "./FilterButton";
 
 const useCompleteAllTodos = () => {
@@ -24,9 +25,9 @@ export const FilterOptions = () => {
             <button type="button" className="hover:scale-125" onClick={completeAllTodos}>
                 <FontAwesomeIcon icon={faAnglesDown} />
             </button>
-            <FilterButton title="All" />
-            <FilterButton title="Active" />
-            <FilterButton title="Completed" />
+            <FilterButton title={Filter.All} />
+            <FilterButton title={Filter.Active} />
+            <FilterButton title={Filter.Completed} />
         </section>
     );
 };
