@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Filter, filterOn, selectFilter } from "../../redux/filterSlice";
@@ -6,7 +7,7 @@ interface FilterButtonProps {
     title: Filter;
 }
 
-export const FilterButton = ({ title }: FilterButtonProps) => {
+export const FilterButton: FC<FilterButtonProps> = ({ title }) => {
     const filter = useSelector(selectFilter);
     const dispatch = useDispatch();
 

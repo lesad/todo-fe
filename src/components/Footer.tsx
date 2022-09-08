@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { useSelector } from "react-redux";
 
 import { selectCompletedIds, useDeleteTodoMutation, useGetCompletedTodosQuery } from "../redux/apiSlice";
@@ -18,7 +19,7 @@ const useDeleteCompletedTodos = () => {
     };
 };
 
-export const Footer = () => {
+export const Footer: FC = () => {
     const completedCount = useGetCompletedCount();
     const handleClick = useDeleteCompletedTodos();
 

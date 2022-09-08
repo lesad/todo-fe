@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { useSelector } from "react-redux";
 
 import { useGetTodosQuery } from "../../redux/apiSlice";
@@ -17,7 +18,7 @@ export const filterTodos = (todos: Todo[], filter: Filter) => {
     }
 };
 
-export const TodoList = () => {
+export const TodoList: FC = () => {
     const { data: todos, isLoading, isSuccess, isError } = useGetTodosQuery();
     const filter = useSelector(selectFilter);
 

@@ -1,5 +1,6 @@
 import { faAnglesDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { FC } from "react";
 import { useSelector } from "react-redux";
 
 import { selectIncompleteIds, useCompleteTodoMutation } from "../../redux/apiSlice";
@@ -17,7 +18,7 @@ const useCompleteAllTodos = () => {
     };
 };
 
-export const FilterOptions = () => {
+export const FilterOptions: FC = () => {
     const completeAllTodos = useCompleteAllTodos();
 
     return (
