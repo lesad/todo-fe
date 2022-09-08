@@ -10,7 +10,7 @@ interface TodoItemProps {
     isCompleted: boolean;
 }
 
-const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
+export const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
     const [text, setText] = useState<string>(value);
     const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
@@ -27,7 +27,7 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const trimmedText = e.target.value.trim();
+        const trimmedText = e.currentTarget.value.trim();
         if (e.key === "Enter" && trimmedText) {
             updateTodo({ id, text: trimmedText });
             toggleEdit();
@@ -49,53 +49,12 @@ const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
                     {text}
                 </span>
             )}
-            <button className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
+            <button type="button" className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
                 <FontAwesomeIcon icon={faPen} />
             </button>
-            <button className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
+            <button type="button" className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
                 <FontAwesomeIcon icon={faRemove} />
             </button>
         </li>
     );
 };
-
-const StyledCheckbox = styled.input`
-    margin-right: 1rem;
-`;
-
-// TODO: hidden spacing makes this jump
-const StyledInput = styled.input`
-    border: 0;
-    outline: 0;
-    background-color: #fffddb;
-`;
-
-const StyledSpan = styled.span`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-`;
-
-const StyledButton = styled(Button)`
-    padding: 0 0.5rem;
-    display: none;
-
-    &:nth-last-child(2) {
-        margin-left: auto;
-    }
-`;
-
-const StyledListItem = styled.li`
-    display: flex;
-    flex-direction: row;
-    margin: 0.8rem 0;
-    height: 2rem;
-
-    &:hover {
-        background-color: #fffddb;
-    }
-
-    &:hover ${StyledButton} {
-        display: block;
-    }
-`;
