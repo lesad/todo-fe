@@ -1,6 +1,6 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useReducer, useState } from "react";
+import { FC, useReducer, useState } from "react";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
 
@@ -10,7 +10,7 @@ interface TodoItemProps {
     isCompleted: boolean;
 }
 
-export const TodoItem = ({ id, value, isCompleted }: TodoItemProps) => {
+export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
     const [text, setText] = useState<string>(value);
     const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
