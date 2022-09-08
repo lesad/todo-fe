@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState } from "./store";
+import type { RootState } from "./store";
 
 export type Filter = "All" | "Active" | "Completed";
 
@@ -17,7 +17,9 @@ export const filterSlice = createSlice({
     initialState,
     reducers: {
         filterOn: (state, action: PayloadAction<Filter>) => {
+            // eslint-disable-next-line no-param-reassign
             state.value = action.payload;
+            // RTK uses immer internally
         },
     },
 });
