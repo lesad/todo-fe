@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import type { RootState } from "./store";
 
-export type Filter = "All" | "Active" | "Completed";
-
-interface FilterState {
-    value: Filter;
+export enum Filter {
+    All = "All",
+    Active = "Active",
+    Completed = "Completed",
 }
 
-const initialState: FilterState = {
-    value: "All",
+const initialState: { value: Filter } = {
+    value: Filter.All,
 };
 
 export const filterSlice = createSlice({
