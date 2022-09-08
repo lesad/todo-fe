@@ -8,9 +8,7 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "lint": "eslint ./src --cache --cache-location node_modules/.cache/.eslintcache",
-    "lint:fix": "npm run lint -- --fix",
-    "storybook": "start-storybook -p 6006 -c ./src/.storybook --ci",
-    "build-storybook": "build-storybook"
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
