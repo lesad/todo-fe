@@ -1,10 +1,10 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { FC, useState } from "react";
 
 import { useAddTodoMutation } from "../../redux/apiSlice";
 
-export const AddTodo = () => {
+export const AddTodo: FC = () => {
     const [text, setText] = useState("");
     const [addTodo] = useAddTodoMutation();
 
