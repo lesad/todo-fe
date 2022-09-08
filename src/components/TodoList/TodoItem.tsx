@@ -1,6 +1,6 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
 
