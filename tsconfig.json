@@ -16,9 +16,7 @@
     "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "esModuleInterop": false
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
