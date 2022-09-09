@@ -7,7 +7,9 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./redux/store";
 
-createRoot(document.getElementById("root") as HTMLElement).render(
+const root = document.getElementById("root") as HTMLElement;
+
+createRoot(root).render(
     <StrictMode>
         <Provider store={store}>
             <App />
