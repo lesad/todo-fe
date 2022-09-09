@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 import { Filter, filterOn, selectFilter } from "../../redux/filterSlice";
 
@@ -12,12 +13,24 @@ export const FilterButton: FC<FilterButtonProps> = ({ title }) => {
     const dispatch = useDispatch();
 
     return (
-        <button
-            type="button"
-            className={`border-black border-2 rounded-full px-2 hover:bg-blue-200 ${filter === title ? "bg-blue-100" : ""}`}
-            onClick={() => dispatch(filterOn(title))}
-        >
+        <StyledButton type="button" isActive={title === filter} onClick={() => dispatch(filterOn(title))}>
             {title}
-        </button>
+        </StyledButton>
     );
 };
+
+interface StyledButtonProps {
+    isActive: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+    border: 2px solid black;
+    border-radius: 99999px;
+    padding: 0 1rem;
+
+    &:hover {
+        background-color: #faf59d;
+    }
+
+    background-color: ${({ isActive }) => (isActive ? "#f5ed5b" : "")};
+`;

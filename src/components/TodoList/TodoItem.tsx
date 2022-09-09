@@ -1,6 +1,7 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useReducer, useState } from "react";
+import styled from "styled-components";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
 
@@ -40,21 +41,67 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
     };
 
     return (
-        <li className="flex flex-row py-2 hover:bg-gray-100 px-2 group">
-            <input className="mr-2" type="checkbox" checked={isCompleted} onChange={handleCheckboxChange} />
+        <StyledListItem>
+            <StyledCheckbox type="checkbox" checked={isCompleted} onChange={handleCheckboxChange} />
             {isEditable ? (
-                <input type="text" value={text} onKeyDown={handleKeyDown} onChange={handleInputChange} onBlur={toggleEdit} />
+                <StyledInput
+                    type="text"
+                    value={text}
+                    onKeyDown={handleKeyDown}
+                    onChange={handleInputChange}
+                    onBlur={toggleEdit}
+                    // TODO: unify events
+                    onMouseLeave={toggleEdit}
+                />
             ) : (
-                <span className="truncate" onDoubleClick={toggleEdit}>
-                    {text}
-                </span>
+                <StyledSpan onDoubleClick={toggleEdit}>{text}</StyledSpan>
             )}
-            <button type="button" className="px-1 ml-auto hidden group-hover:block" onClick={handleRenameClick}>
+            <StyledButton type="button" onClick={handleRenameClick}>
                 <FontAwesomeIcon icon={faPen} />
-            </button>
-            <button type="button" className="px-1 hidden group-hover:block" onClick={() => deleteTodo(id)}>
+            </StyledButton>
+            <StyledButton type="button" onClick={() => deleteTodo(id)}>
                 <FontAwesomeIcon icon={faRemove} />
-            </button>
-        </li>
+            </StyledButton>
+        </StyledListItem>
     );
 };
+
+const StyledCheckbox = styled.input`
+    margin-right: 1rem;
+`;
+
+// TODO: hidden spacing makes this jump
+const StyledInput = styled.input`
+    border: 0;
+    outline: 0;
+    background-color: #fffddb;
+`;
+
+const StyledSpan = styled.span`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+const StyledButton = styled.button`
+    padding: 0 0.5rem;
+    display: none;
+
+    &:nth-last-child(2) {
+        margin-left: auto;
+    }
+`;
+
+const StyledListItem = styled.li`
+    display: flex;
+    flex-direction: row;
+    padding: 0.8rem 0;
+
+    &:hover {
+        background-color: #fffddb;
+    }
+
+    &:hover ${StyledButton} {
+        display: block;
+    }
+`;

@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
 import { useGetTodosQuery } from "../../redux/apiSlice";
 import { Filter, selectFilter } from "../../redux/filterSlice";
@@ -26,10 +27,14 @@ export const TodoList: FC = () => {
     if (!isSuccess || isError) return <span>Error!</span>;
 
     return (
-        <ul className="border-t-2 border-black">
+        <StyledUl>
             {filterTodos(todos, filter).map((todo) => (
                 <TodoItem key={todo.id} id={todo.id} value={todo.text} isCompleted={todo.completed} />
             ))}
-        </ul>
+        </StyledUl>
     );
 };
+
+const StyledUl = styled.ul`
+    border-top: 2px solid black;
+`;
