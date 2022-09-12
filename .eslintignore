@@ -1,0 +1,11 @@
+# Documentation of this configuration is in src/documentation/infrastructure/codeStyle.story.mdx. Keep in sync.
+dist
+.eslintrc.js
+babel.config.js
+webpack.config.js
+jest.config.ts
+AppVersionWebpackPlugin.js
+
+# not ignore, hidden folders are ignored by default
+!.storybook
+!.test

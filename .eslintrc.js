@@ -9,6 +9,7 @@ module.exports = {
         "plugin:jest/recommended",
         "plugin:jest/style",
         "plugin:prettier/recommended",
+        "plugin:storybook/recommended",
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -42,15 +43,23 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": [
             "error",
             {
-                vars: "all", // Check use of all variables, global included. (default setting)
-                args: "all", // Check use of all parameters.
+                vars: "all",
+                // Check use of all variables, global included. (default setting)
+                args: "all",
+                // Check use of all parameters.
                 argsIgnorePattern: "^_", //Unused parameters can start by "_"
             },
         ],
         // we prefer top-down approach, mainly for styled-components
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-explicit-any": "error",
-        "no-param-reassign": ["error", { props: true, ignorePropertyModificationsForRegex: ["^draft", "^accumulator"] }],
+        "no-param-reassign": [
+            "error",
+            {
+                props: true,
+                ignorePropertyModificationsForRegex: ["^draft", "^accumulator"],
+            },
+        ],
         "func-names": ["error", "as-needed"],
         "import/no-extraneous-dependencies": [
             "error",
@@ -58,17 +67,21 @@ module.exports = {
                 devDependencies: ["**/*.test.{ts,tsx}", "**/*.story.{ts,tsx}", "**/.test/**", "**/.storybook/**"],
             },
         ],
-        "jest/expect-expect": ["error", { assertFunctionNames: ["expect", "assert*", "**.select", "expectSaga", "testSaga"] }],
-        "react/jsx-props-no-spreading": "off",
-        "no-restricted-syntax": [
+        "jest/expect-expect": [
             "error",
-            "LabeledStatement",
-            "WithStatement",
+            {
+                assertFunctionNames: ["expect", "assert*", "**.select", "expectSaga", "testSaga"],
+            },
         ],
-        "react/function-component-definition": ["error", {
-            namedComponents: "arrow-function",
-            unnamedComponents: "arrow-function",
-        }],
+        "react/jsx-props-no-spreading": "off",
+        "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+        "react/function-component-definition": [
+            "error",
+            {
+                namedComponents: "arrow-function",
+                unnamedComponents: "arrow-function",
+            },
+        ],
         "@typescript-eslint/default-param-last": "off",
         "jsx-a11y/label-has-associated-control": [
             2,
