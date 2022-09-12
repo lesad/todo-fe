@@ -1,9 +1,9 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useState } from "react";
 import styled from "styled-components";
 
 import { useAddTodoMutation } from "../../redux/apiSlice";
+import { Button } from "../Button";
 
 export const AddTodo: FC = () => {
     const [text, setText] = useState("");
@@ -28,17 +28,9 @@ export const AddTodo: FC = () => {
     };
 
     return (
-        <StyledForm className="flex flex-row my-3 border-b-2 border-b-black">
-            <StyledInput
-                className="grow focus:outline-none"
-                placeholder="Enter new todo"
-                value={text}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-            />
-            <button type="submit" onClick={handleClick}>
-                <FontAwesomeIcon icon={faPlus} />
-            </button>
+        <StyledForm>
+            <StyledInput placeholder="Enter new todo" value={text} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <Button icon={faPlus} onClick={handleClick} />
         </StyledForm>
     );
 };

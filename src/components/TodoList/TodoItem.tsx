@@ -1,9 +1,9 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useReducer, useState } from "react";
 import styled from "styled-components";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
+import { Button } from "../Button";
 
 interface TodoItemProps {
     id: string;
@@ -56,12 +56,8 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
             ) : (
                 <StyledSpan onDoubleClick={toggleEdit}>{text}</StyledSpan>
             )}
-            <StyledButton type="button" onClick={handleRenameClick}>
-                <FontAwesomeIcon icon={faPen} />
-            </StyledButton>
-            <StyledButton type="button" onClick={() => deleteTodo(id)}>
-                <FontAwesomeIcon icon={faRemove} />
-            </StyledButton>
+            <StyledButton onClick={handleRenameClick} icon={faPen} />
+            <StyledButton onClick={() => deleteTodo(id)} icon={faRemove} />
         </StyledListItem>
     );
 };
@@ -83,7 +79,7 @@ const StyledSpan = styled.span`
     white-space: nowrap;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
     padding: 0 0.5rem;
     display: none;
 
@@ -95,7 +91,8 @@ const StyledButton = styled.button`
 const StyledListItem = styled.li`
     display: flex;
     flex-direction: row;
-    padding: 0.8rem 0;
+    margin: 0.8rem 0;
+    height: 2rem;
 
     &:hover {
         background-color: #fffddb;

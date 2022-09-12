@@ -32,5 +32,5 @@ const StyledButton = styled.button<StyledButtonProps>`
         background-color: #faf59d;
     }
 
-    background-color: ${({ isActive }) => (isActive ? "#f5ed5b" : "")};
+    background-color: ${({ isActive }) => isActive && "#f5ed5b"};
 `;

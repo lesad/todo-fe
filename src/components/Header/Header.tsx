@@ -6,7 +6,7 @@ import { FilterOptions } from "./FilterOptions";
 
 export const Header: FC = () => (
     <header>
-        <StyledTitle className="text-3xl text-center font-bold">TODOS</StyledTitle>
+        <StyledTitle>TODOS</StyledTitle>
         <AddTodo />
         <FilterOptions />
     </header>
