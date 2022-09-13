@@ -10,7 +10,9 @@ export type ButtonProps = {
     className?: string;
 };
 
-export const Button: FC<ButtonProps> = ({ className, type, icon, onClick }) => (
+const noop = () => {};
+
+export const Button: FC<ButtonProps> = ({ className = "", type = "button", icon, onClick = noop }) => (
     <StyledButton className={className} type={type} onClick={onClick}>
         <FontAwesomeIcon icon={icon} />
     </StyledButton>
@@ -24,9 +26,3 @@ const StyledButton = styled.button`
     text-align: center;
     justify-items: center;
 `;
-
-Button.defaultProps = {
-    type: "button",
-    onClick: () => {},
-    className: "",
-};

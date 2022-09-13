@@ -88,5 +88,6 @@ module.exports = {
                 assert: "either", // either check for `htmlFor` or `nesting`, see https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/label-has-associated-control.md
             },
         ],
+        "react/require-default-props": "off"
     },
 };
