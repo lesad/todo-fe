@@ -10,11 +10,11 @@ import { TodoItem } from "./TodoItem";
 
 export const filterTodos = (todos: Todo[], filter: Filter) => {
     switch (filter) {
-        case "Active":
+        case Filter.Active:
             return todos.filter((todo) => !todo.completed);
-        case "Completed":
+        case Filter.Completed:
             return todos.filter((todo) => todo.completed);
-        default: // All
+        default: // Filter.All
             return todos;
     }
 };
