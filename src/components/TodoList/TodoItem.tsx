@@ -1,9 +1,8 @@
-import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
 import { FC, useReducer, useState } from "react";
 import styled from "styled-components";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
-import { Button } from "../Button";
+import { IconButton, IconCode } from "../IconButton";
 
 interface TodoItemProps {
     id: string;
@@ -56,8 +55,8 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
             ) : (
                 <StyledSpan onDoubleClick={toggleEdit}>{text}</StyledSpan>
             )}
-            <StyledButton onClick={handleRenameClick} icon={faPen} />
-            <StyledButton onClick={() => deleteTodo(id)} icon={faRemove} />
+            <StyledButton onClick={handleRenameClick} icon={IconCode.rename} />
+            <StyledButton onClick={() => deleteTodo(id)} icon={IconCode.remove} />
         </StyledListItem>
     );
 };
@@ -79,7 +78,7 @@ const StyledSpan = styled.span`
     white-space: nowrap;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(IconButton)`
     padding: 0 0.5rem;
     display: none;
 

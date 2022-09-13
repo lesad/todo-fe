@@ -1,9 +1,8 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FC, useState } from "react";
 import styled from "styled-components";
 
 import { useAddTodoMutation } from "../../redux/apiSlice";
-import { Button } from "../Button";
+import { IconButton, IconCode } from "../IconButton";
 
 export const AddTodo: FC = () => {
     const [text, setText] = useState("");
@@ -30,7 +29,7 @@ export const AddTodo: FC = () => {
     return (
         <StyledForm>
             <StyledInput placeholder="Enter new todo" value={text} onChange={handleChange} onKeyDown={handleKeyDown} />
-            <Button icon={faPlus} onClick={handleClick} />
+            <IconButton icon={IconCode.plus} onClick={handleClick} />
         </StyledForm>
     );
 };
