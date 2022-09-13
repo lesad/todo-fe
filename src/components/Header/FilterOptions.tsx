@@ -15,7 +15,7 @@ const useCompleteAllTodos = () => {
     return async () => {
         if (!toComplete) return;
         const promises = toComplete.map((id) => completeTodo(id));
-        await Promise.all(promises);
+        await Promise.allSettled(promises);
     };
 };
 
