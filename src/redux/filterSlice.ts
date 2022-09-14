@@ -16,10 +16,8 @@ export const filterSlice = createSlice({
     name: "filter",
     initialState,
     reducers: {
-        filterOn: (state, action: PayloadAction<Filter>) => {
-            // eslint-disable-next-line no-param-reassign
-            state.value = action.payload;
-            // RTK uses immer internally
+        filterOn: (draft, action: PayloadAction<Filter>) => {
+            draft.value = action.payload;
         },
     },
 });
