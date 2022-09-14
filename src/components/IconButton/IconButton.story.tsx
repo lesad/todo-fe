@@ -1,4 +1,4 @@
-import { Category, createActionArgType, createEnumArgType, createSingleStoryExports, DISABLED_ARG_TYPE } from "../../.storybook/utils";
+import { Category, ControlType, createActionArgType, createEnumArgType, createSingleStoryExports, DISABLED_ARG_TYPE } from "../../.storybook/utils";
 import { IconButton, IconCode } from "./IconButton";
 
 enum HTMLButtonTypes {
@@ -10,7 +10,7 @@ const { defaultExport, storyExport } = createSingleStoryExports({
     categoryPath: [Category.genericComponents, Category.buttons],
     component: IconButton,
     argTypes: {
-        icon: createEnumArgType("icon", IconCode, IconCode.plus),
+        icon: createEnumArgType("icon", IconCode, IconCode.plus, { type: ControlType.select}),
         type: createEnumArgType("type", HTMLButtonTypes, HTMLButtonTypes.button),
         onClick: createActionArgType(),
         className: DISABLED_ARG_TYPE,
