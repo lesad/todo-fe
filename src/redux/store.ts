@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import createSagaMiddleware from "@redux-saga/core";
+import createSagaMiddleware from "redux-saga";
 
 import api from "./apiSlice";
+import effectReducer from "./effectSlice";
 import filterReducer from "./filterSlice";
 import rootSaga from "./saga";
 
@@ -11,6 +12,7 @@ const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,
         filter: filterReducer,
+        effect: effectReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware, sagaMiddleware),
 });
