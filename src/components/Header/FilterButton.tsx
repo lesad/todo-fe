@@ -12,8 +12,13 @@ export const FilterButton: FC<FilterButtonProps> = ({ title }) => {
     const filter = useSelector(selectFilter);
     const dispatch = useDispatch();
 
+    const handleClick = () => {
+        dispatch(filterOn(title));
+        dispatch({ type: "FILTER_TODO" });
+    };
+
     return (
-        <StyledButton type="button" isActive={title === filter} onClick={() => dispatch(filterOn(title))}>
+        <StyledButton type="button" isActive={title === filter} onClick={handleClick}>
             {title}
         </StyledButton>
     );

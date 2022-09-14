@@ -1,11 +1,14 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { useAddTodoMutation } from "../../redux/apiSlice";
+import { sagaActions } from "../../redux/sagaActions";
 import { Button } from "../Button";
 
 export const AddTodo: FC = () => {
+    const dispatch = useDispatch();
     const [text, setText] = useState("");
     const [addTodo] = useAddTodoMutation();
 
@@ -15,6 +18,7 @@ export const AddTodo: FC = () => {
         const trimmedText = e.currentTarget.value.trim();
         if (e.key === "Enter" && trimmedText) {
             addTodo(trimmedText);
+            dispatch({ type: sagaActions.ADD_TODO, payload: text });
             setText("");
         }
     };
@@ -23,6 +27,7 @@ export const AddTodo: FC = () => {
         e.preventDefault();
         if (text) {
             addTodo(text);
+            dispatch({ type: sagaActions.ADD_TODO, payload: text });
             setText("");
         }
     };

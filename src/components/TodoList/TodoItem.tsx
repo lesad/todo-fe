@@ -1,8 +1,10 @@
 import { faPen, faRemove } from "@fortawesome/free-solid-svg-icons";
 import { FC, useReducer, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { useCompleteTodoMutation, useDeleteTodoMutation, useIncompleteTodoMutation, useUpdateTodoMutation } from "../../redux/apiSlice";
+import { sagaActions } from "../../redux/sagaActions";
 import { Button } from "../Button";
 
 interface TodoItemProps {
@@ -12,6 +14,7 @@ interface TodoItemProps {
 }
 
 export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
+    const dispatch = useDispatch();
     const [text, setText] = useState<string>(value);
     const [isEditable, toggleEdit] = useReducer((state) => !state, false);
 
@@ -23,6 +26,7 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
     const handleCheckboxChange = () => {
         if (isCompleted) incompleteTodo(id);
         else completeTodo(id);
+        dispatch({ type: sagaActions.TOGGLE_TODO });
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value);
@@ -32,12 +36,21 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
         if (e.key === "Enter" && trimmedText) {
             updateTodo({ id, text: trimmedText });
             toggleEdit();
+            dispatch({ type: sagaActions.UPDATE_TODO });
         }
     };
 
     const handleRenameClick = () => {
-        if (text !== value) updateTodo({ id, text });
+        if (text !== value) {
+            updateTodo({ id, text });
+            dispatch({ type: sagaActions.UPDATE_TODO });
+        }
         toggleEdit();
+    };
+
+    const handleDeleteClick = () => {
+        deleteTodo(id);
+        dispatch({ type: sagaActions.DELETE_TODO });
     };
 
     return (
@@ -57,7 +70,7 @@ export const TodoItem: FC<TodoItemProps> = ({ id, value, isCompleted }) => {
                 <StyledSpan onDoubleClick={toggleEdit}>{text}</StyledSpan>
             )}
             <StyledButton onClick={handleRenameClick} icon={faPen} />
-            <StyledButton onClick={() => deleteTodo(id)} icon={faRemove} />
+            <StyledButton onClick={handleDeleteClick} icon={faRemove} />
         </StyledListItem>
     );
 };

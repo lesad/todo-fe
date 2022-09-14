@@ -1,0 +1,7 @@
+export const sagaActions = {
+    ADD_TODO: "ADD_TODO",
+    UPDATE_TODO: "UPDATE_TODO",
+    DELETE_TODO: "DELETE_TODO",
+    TOGGLE_TODO: "TOGGLE_TODO",
+    FILTER_TODO: "FILTER_TODO",
+};
