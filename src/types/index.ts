@@ -4,8 +4,6 @@ import type { ComponentType } from "react";
 import type { Selector } from "react-redux";
 import type { Action, AnyAction } from "redux";
 
-export * from "./be";
-
 /**
  * Readonly plain object with values of specified type mapped by keys.
  * @template T - Type of object properties values.
