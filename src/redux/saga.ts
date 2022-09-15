@@ -1,12 +1,18 @@
-import { all, call } from "redux-saga/effects";
+import type { Action } from "redux";
+import { all, fork, put, take } from "redux-saga/effects";
 
-import { addTodoWatcher, filterTodoWatcher } from "../components/Header/saga";
-import { completeTodoWatcher, removeTodoWatcher, renameTodoWatcher } from "../components/TodoList/saga";
+import { actions } from "./actions";
+import { appendEffect } from "./actionsSlice";
 
-const watchers = [addTodoWatcher, filterTodoWatcher, removeTodoWatcher, completeTodoWatcher, renameTodoWatcher];
+function* storeActionWorker() {
+    while (true) {
+        const action: Action = yield take(Object.values(actions));
+        yield put(appendEffect(action.type));
+    }
+}
 
 function* rootSaga() {
-    yield all(watchers.map((watcher) => call(watcher)));
+    yield all([fork(storeActionWorker)]);
 }
 
 export default rootSaga;
