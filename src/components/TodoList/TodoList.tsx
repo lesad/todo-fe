@@ -3,21 +3,12 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { useGetTodosQuery } from "../../redux/apiSlice";
-import { Filter, selectFilter } from "../../redux/filterSlice";
+import { selectFilter } from "../../redux/filterSlice";
 import type Todo from "../../types/todo";
 import { Spinner } from "../Spinner";
+import { loadingFinished, loadingStarted } from "./actions";
+import { filterTodos } from "./filterTodo";
 import { TodoItem } from "./TodoItem";
-
-export const filterTodos = (todos: Todo[], filter: Filter) => {
-    switch (filter) {
-        case "Active":
-            return todos.filter((todo) => !todo.completed);
-        case "Completed":
-            return todos.filter((todo) => todo.completed);
-        default: // All
-            return todos;
-    }
-};
 
 export const TodoList: FC = () => {
     const { data: todos, isLoading, isSuccess, isError } = useGetTodosQuery();
@@ -28,7 +19,7 @@ export const TodoList: FC = () => {
 
     return (
         <StyledUl>
-            {filterTodos(todos, filter).map((todo) => (
+            {filterTodos(todos, filter).map((todo: Todo) => (
                 <TodoItem key={todo.id} id={todo.id} value={todo.text} isCompleted={todo.completed} />
             ))}
         </StyledUl>
