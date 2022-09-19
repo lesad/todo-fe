@@ -1,4 +1,4 @@
-import { sum, capitalizeIfString, reverseCopyArray, fibonacci } from "./pure-fn";
+import { capitalizeIfString, fibonacci, reverseCopyArray, sum } from "./pure-fn";
 
 describe("pure functions", () => {
     describe("sum", () => {
