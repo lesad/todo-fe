@@ -13,7 +13,7 @@
         "importsNotUsedAsValues": "error",
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "plugins": [
             {
                 "name": "typescript-styled-plugin"
