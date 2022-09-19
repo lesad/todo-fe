@@ -2,8 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import createSagaMiddleware from "redux-saga";
 
-import api from "./apiSlice";
 import actionsReducer from "./actionsSlice";
+import api from "./apiSlice";
 import filterReducer from "./filterSlice";
 import rootSaga from "./saga";
 

@@ -1,11 +1,12 @@
-import type { FC } from "react";
-import { useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { useGetTodosQuery } from "../../redux/apiSlice";
 import { Filter, selectFilter } from "../../redux/filterSlice";
 import type Todo from "../../types/todo";
 import { Spinner } from "../Spinner";
+import { loadingFinished, loadingStarted } from "./actions";
 import { TodoItem } from "./TodoItem";
 
 export const filterTodos = (todos: Todo[], filter: Filter) => {
@@ -22,6 +23,12 @@ export const filterTodos = (todos: Todo[], filter: Filter) => {
 export const TodoList: FC = () => {
     const { data: todos, isLoading, isSuccess, isError } = useGetTodosQuery();
     const filter = useSelector(selectFilter);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoading) dispatch(loadingStarted());
+        else dispatch(loadingFinished());
+    }, [isLoading, dispatch]);
 
     if (isLoading) return <Spinner />;
     if (!isSuccess || isError) return <span>Error!</span>;

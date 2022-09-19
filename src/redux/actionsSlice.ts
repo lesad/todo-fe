@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { RootState } from "./store";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const initialState: string[] = [];
 
 const actionsSlice = createSlice({
@@ -10,7 +9,7 @@ const actionsSlice = createSlice({
     initialState,
     reducers: {
         appendEffect: (draft, action) => {
-            draft.push(JSON.stringify(action.payload));
+            draft.push(JSON.stringify(action.payload).replace(/['"]+/g, ""));
         },
     },
 });
