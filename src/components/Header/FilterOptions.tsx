@@ -1,11 +1,10 @@
-import { faAnglesDown } from "@fortawesome/free-solid-svg-icons";
 import type { FC } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { selectIncompleteIds, useCompleteTodoMutation } from "../../redux/apiSlice";
 import { Filter } from "../../redux/filterSlice";
-import { Button } from "../Button";
+import { IconButton, IconCode } from "../IconButton";
 import { FilterButton } from "./FilterButton";
 
 const useCompleteAllTodos = () => {
@@ -24,7 +23,7 @@ export const FilterOptions: FC = () => {
 
     return (
         <StyledSection>
-            <StyledButton onClick={completeAllTodos} icon={faAnglesDown} />
+            <StyledButton onClick={completeAllTodos} icon={IconCode.downArrows} />
             <FilterButton title={Filter.All} />
             <FilterButton title={Filter.Active} />
             <FilterButton title={Filter.Completed} />
@@ -39,7 +38,7 @@ const StyledSection = styled.section`
     margin: 1rem 2rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(IconButton)`
     &:hover {
         transform: scale(1.25);
     }

@@ -1,9 +1,9 @@
 import { Category, createSingleStoryExports } from "../.storybook/utils";
-import { Button } from "./Button";
+import { Spinner } from "./Spinner";
 
 const { defaultExport, storyExport } = createSingleStoryExports({
-    categoryPath: [Category.genericComponents],
-    component: Button,
+    categoryPath: [Category.genericComponents, Category.buttons],
+    component: Spinner,
 });
 
 export default defaultExport;
