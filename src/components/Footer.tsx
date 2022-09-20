@@ -16,7 +16,7 @@ const useDeleteCompletedTodos = () => {
     return async () => {
         if (!toDelete) return;
         const promises = toDelete.map((id) => deleteTodo(id));
-        await Promise.all(promises);
+        await Promise.allSettled(promises);
     };
 };
 
